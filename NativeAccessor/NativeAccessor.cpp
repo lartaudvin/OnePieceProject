@@ -86,3 +86,23 @@ DLLAPI void insert_character_call(void* instance, const char* name, const char* 
 	Native_Accessor *accessor = (Native_Accessor*)instance;
 	accessor->insert_character(string_name, string_fullname);
 }
+
+DLLAPI void export_xml_call(void* instance, const char* path)
+{
+	const std::string string_path(path);
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	accessor->export_xml(string_path);
+}
+
+DLLAPI void import_xml_call(void* instance, const char* path)
+{
+	const std::string string_path(path);
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	accessor->import_xml(string_path);
+}
+
+DLLAPI void delete_native_accessor(void *instance)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	delete accessor;
+}

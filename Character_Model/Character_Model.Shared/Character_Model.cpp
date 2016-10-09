@@ -1,5 +1,4 @@
 ﻿#include "Character_Model.h"
-#include "rapidxml_1_13/rapidxml.hpp"
 #include "boost/property_tree/xml_parser.hpp"
 #include "boost/property_tree/ptree.hpp"
 #include "boost/filesystem.hpp"

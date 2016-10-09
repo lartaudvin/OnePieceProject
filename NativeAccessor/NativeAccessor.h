@@ -33,6 +33,7 @@ extern "C" {
 	DLLAPI void insert_character_call(void* instance, const char* name, const char* fullname);
 	DLLAPI void export_xml_call(void* instance, const char* path);
 	DLLAPI void import_xml_call(void* instance, const char* path);
+	DLLAPI void delete_native_accessor(void* instance);
 
 #if __cplusplus
 }

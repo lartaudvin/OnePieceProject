@@ -48,17 +48,6 @@ Character_Model* Character_Database::getCharacterByName(const std::string& name)
 	}
 
 	return nullptr;
-	/*
-	auto e = std::find_if(
-		m_characterList.begin(),
-		m_characterList.end(),
-		[&name](const Map_Element& v) -> bool {
-			return v.second->getName() == name;
-		}
-	);
-
-	return *e->second;
-	*/
 }
 
 int Character_Database::getFirstCharacterFreeId() const
@@ -84,6 +73,15 @@ void Character_Database::exportXml(const std::string& folder_path) const
 	{
 		throw xml_folder_not_exists_exception();
 	}
+	auto folder_boost_path = path{ folder_path };
+	directory_iterator end_itr;
+
+	for (auto itr = directory_iterator{ folder_boost_path }; itr != end_itr; ++itr)
+	{
+		path current_path = itr->path();
+		remove_all(current_path);
+	}
+
 	for (auto it = m_characterList.cbegin(), e = m_characterList.cend(); it != e; ++it)
 	{
 		try
