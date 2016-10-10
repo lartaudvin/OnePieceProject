@@ -1,0 +1,3 @@
+-Changer la méthode d'acquisition depuis le natif:
+  récupérer le nombre d'éléments de la map
+  accéder à chaque élément en fonction de sa position
