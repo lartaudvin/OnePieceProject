@@ -24,7 +24,15 @@ void Character_Database::insert_character(std::unique_ptr<Character_Model>&& inp
 {
 	try
 	{
-		m_characterList.insert({ getFirstCharacterFreeId(), std::move(input_character) });
+		for (auto&& character : m_characterList)
+		{
+			if (character->getName().compare(input_character->getName()) == 0)
+			{
+				throw ExceptionManager::key_already_exists();
+			}
+		}
+
+		m_characterList.push_back(std::move(input_character));
 	}
 	catch (...)
 	{
@@ -32,7 +40,7 @@ void Character_Database::insert_character(std::unique_ptr<Character_Model>&& inp
 	}
 }
 
-Character_Model* Character_Database::getCharacterById(int id)
+Character_Model* Character_Database::getCharacterAt(int id)
 {
 	return m_characterList[id].get();
 }
@@ -41,30 +49,13 @@ Character_Model* Character_Database::getCharacterByName(const std::string& name)
 {
 	for (const auto& e : m_characterList)
 	{
-		if (e.second->getName() == name)
+		if (e->getName() == name)
 		{
-			return e.second.get();
+			return e.get();
 		}
 	}
 
 	return nullptr;
-}
-
-int Character_Database::getFirstCharacterFreeId() const
-{
-	for (int result = 0; /*for-ever*/; result++)
-	{
-		try
-		{
-			auto&& e = m_characterList.at(result);
-		}
-		catch (const out_of_range&)
-		{
-			return result;
-		}
-	}
-
-	return -1;
 }
 
 void Character_Database::exportXml(const std::string& folder_path) const
@@ -86,10 +77,10 @@ void Character_Database::exportXml(const std::string& folder_path) const
 	{
 		try
 		{
-			const auto& current_model = it->second;
+			const auto& current_model = *it;
 			const auto& current_name = current_model->getName();
 			stringstream stream;
-			stream << folder_path << "\\" << it->first << "_" << current_name;
+			stream << folder_path << "\\" << current_name;
 			auto current_folder_path = stream.str();
 
 			if (exists(current_folder_path))
@@ -128,22 +119,8 @@ void Character_Database::importXml(const std::string& folder_path)
 				vector<string> tokens;
 				boost::split(tokens, current_path.string(), boost::is_any_of("\\"));
 				boost::split(tokens, tokens[tokens.size() - 1], boost::is_any_of("_"));
-				int id = stoi(tokens[0]);
 
-				try
-				{
-					auto&& e = m_characterList.at(id);
-				}
-				catch (const out_of_range&)
-				{
-					id = this->getFirstCharacterFreeId();
-				}
-				catch (...)
-				{
-					throw;
-				}
-
-				m_characterList.insert({ id, std::move(current_model) });
+				m_characterList.push_back({ std::move(current_model) });
 			}
 		}
 	}
@@ -151,4 +128,29 @@ void Character_Database::importXml(const std::string& folder_path)
 	{
 		throw;
 	}
+}
+
+const std::string& Character_Database::getCharacterNameAt(int id) const
+{
+	return m_characterList.at(id)->getName();
+}
+
+void Character_Database::setCharacterNameAt(int id, const std::string& name)
+{
+	m_characterList.at(id)->setName(name);
+}
+
+const std::string& Character_Database::getCharacterFullNameAt(int id) const
+{
+	return m_characterList.at(id)->getFullName();
+}
+
+void Character_Database::setCharacterFullNameAt(int id, const std::string& fullname)
+{
+	m_characterList.at(id)->setFullName(fullname);
+}
+
+int Character_Database::countCharacters() const
+{
+	return m_characterList.size();
 }

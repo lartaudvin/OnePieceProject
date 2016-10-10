@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <string>
 #include <memory>
+#include <vector>
 
 #include "NativeAccessorAPI.h"
 class Character_Database;
@@ -16,10 +17,15 @@ public:
 	void insert_character(const std::string& name, const std::string& fullname);
 	void export_xml(const std::string& path) const;
 	void import_xml(const std::string& path);
+	int count_characters() const;
+	std::string get_name_at(int id) const;
+	void set_name_at(int id, const std::string& name);
+	std::string get_fullname_at(int id) const;
+	void set_fullname_at(int id, const std::string& fullname);
 
 
 private:
-
+	//The implementator of the class used to hide all the methods of the C++ database
 	class NativeAccessor_Impl;
 	std::unique_ptr<NativeAccessor_Impl> m_pImpl;
 
@@ -30,10 +36,15 @@ extern "C" {
 #endif
 
 	DLLAPI void* create_native_accessor();
-	DLLAPI void insert_character_call(void* instance, const char* name, const char* fullname);
+	DLLAPI int insert_character_call(void* instance, const char* name, const char* fullname);
 	DLLAPI void export_xml_call(void* instance, const char* path);
 	DLLAPI void import_xml_call(void* instance, const char* path);
 	DLLAPI void delete_native_accessor(void* instance);
+	DLLAPI int count_characters_call(void* instance);
+	DLLAPI void get_name_at_call(void* instance, char* name, int len, int id);
+	DLLAPI void set_name_at_call(void* instance, int id, const char* name);
+	DLLAPI void get_fullname_at_call(void* instance, char* fullname, int len, int id);
+	DLLAPI void set_fullname_at_call(void* instance, int id, const char* fullname);
 
 #if __cplusplus
 }

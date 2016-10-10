@@ -21,9 +21,19 @@ const string& Character_Model::getName() const
 	return m_name;
 }
 
+void Character_Model::setName(const std::string& name)
+{
+	m_name = name;
+}
+
 const string& Character_Model::getFullName() const
 {
 	return m_fullname;
+}
+
+void Character_Model::setFullName(const std::string& name)
+{
+	m_fullname = name;
 }
 
 void Character_Model::exportToXml(const std::string& folder_path) const

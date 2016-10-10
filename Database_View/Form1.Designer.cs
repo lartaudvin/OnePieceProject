@@ -35,9 +35,9 @@
             this.fullname_text = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.import_xml_button = new System.Windows.Forms.Button();
             this.export_xml_button = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.character_list = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -96,8 +96,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.character_list);
             this.tabPage1.Controls.Add(this.export_xml_button);
-            this.tabPage1.Controls.Add(this.import_xml_button);
             this.tabPage1.Controls.Add(this.name_text);
             this.tabPage1.Controls.Add(this.fullname_text);
             this.tabPage1.Controls.Add(this.insert_character_button);
@@ -111,6 +111,16 @@
             this.tabPage1.Text = "Character";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // export_xml_button
+            // 
+            this.export_xml_button.Location = new System.Drawing.Point(121, 244);
+            this.export_xml_button.Name = "export_xml_button";
+            this.export_xml_button.Size = new System.Drawing.Size(75, 23);
+            this.export_xml_button.TabIndex = 6;
+            this.export_xml_button.Text = "export xml";
+            this.export_xml_button.UseVisualStyleBackColor = true;
+            this.export_xml_button.Click += new System.EventHandler(this.export_xml_button_Click);
+            // 
             // tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -121,25 +131,13 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // import_xml_button
+            // character_list
             // 
-            this.import_xml_button.Location = new System.Drawing.Point(121, 244);
-            this.import_xml_button.Name = "import_xml_button";
-            this.import_xml_button.Size = new System.Drawing.Size(75, 23);
-            this.import_xml_button.TabIndex = 5;
-            this.import_xml_button.Text = "import xml";
-            this.import_xml_button.UseVisualStyleBackColor = true;
-            this.import_xml_button.Click += new System.EventHandler(this.import_xml_button_Click);
-            // 
-            // export_xml_button
-            // 
-            this.export_xml_button.Location = new System.Drawing.Point(217, 243);
-            this.export_xml_button.Name = "export_xml_button";
-            this.export_xml_button.Size = new System.Drawing.Size(75, 23);
-            this.export_xml_button.TabIndex = 6;
-            this.export_xml_button.Text = "export xml";
-            this.export_xml_button.UseVisualStyleBackColor = true;
-            this.export_xml_button.Click += new System.EventHandler(this.export_xml_button_Click);
+            this.character_list.FormattingEnabled = true;
+            this.character_list.Location = new System.Drawing.Point(480, 76);
+            this.character_list.Name = "character_list";
+            this.character_list.Size = new System.Drawing.Size(172, 147);
+            this.character_list.TabIndex = 7;
             // 
             // Form1
             // 
@@ -167,7 +165,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button export_xml_button;
-        private System.Windows.Forms.Button import_xml_button;
+        private System.Windows.Forms.ListBox character_list;
     }
 }
 
