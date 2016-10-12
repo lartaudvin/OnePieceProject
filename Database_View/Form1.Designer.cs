@@ -30,23 +30,29 @@
         {
             this.insert_character_button = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.name_text = new System.Windows.Forms.TextBox();
-            this.fullname_text = new System.Windows.Forms.TextBox();
+            this.name_id_text = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.delete_button = new System.Windows.Forms.Button();
             this.new_character_button = new System.Windows.Forms.Button();
             this.character_list = new System.Windows.Forms.ListBox();
             this.export_xml_button = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.delete_button = new System.Windows.Forms.Button();
+            this.first_name_text = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.last_name_text = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.surname_text = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.description_text = new System.Windows.Forms.RichTextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // insert_character_button
             // 
-            this.insert_character_button.Location = new System.Drawing.Point(31, 244);
+            this.insert_character_button.Location = new System.Drawing.Point(518, 343);
             this.insert_character_button.Name = "insert_character_button";
             this.insert_character_button.Size = new System.Drawing.Size(75, 23);
             this.insert_character_button.TabIndex = 0;
@@ -59,32 +65,17 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 39);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Name";
+            this.label1.Text = "Name Id";
             // 
-            // label2
+            // name_id_text
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(118, 39);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Full Name";
-            // 
-            // name_text
-            // 
-            this.name_text.Location = new System.Drawing.Point(6, 66);
-            this.name_text.Name = "name_text";
-            this.name_text.Size = new System.Drawing.Size(100, 20);
-            this.name_text.TabIndex = 3;
-            // 
-            // fullname_text
-            // 
-            this.fullname_text.Location = new System.Drawing.Point(121, 66);
-            this.fullname_text.Name = "fullname_text";
-            this.fullname_text.Size = new System.Drawing.Size(170, 20);
-            this.fullname_text.TabIndex = 4;
+            this.name_id_text.Location = new System.Drawing.Point(56, 32);
+            this.name_id_text.MaxLength = 50;
+            this.name_id_text.Name = "name_id_text";
+            this.name_id_text.Size = new System.Drawing.Size(100, 20);
+            this.name_id_text.TabIndex = 3;
             // 
             // tabControl1
             // 
@@ -98,15 +89,21 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.description_text);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.surname_text);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.last_name_text);
+            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.first_name_text);
+            this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.delete_button);
             this.tabPage1.Controls.Add(this.new_character_button);
             this.tabPage1.Controls.Add(this.character_list);
             this.tabPage1.Controls.Add(this.export_xml_button);
-            this.tabPage1.Controls.Add(this.name_text);
-            this.tabPage1.Controls.Add(this.fullname_text);
+            this.tabPage1.Controls.Add(this.name_id_text);
             this.tabPage1.Controls.Add(this.insert_character_button);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -114,6 +111,17 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Character";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // delete_button
+            // 
+            this.delete_button.Location = new System.Drawing.Point(518, 402);
+            this.delete_button.Name = "delete_button";
+            this.delete_button.Size = new System.Drawing.Size(75, 23);
+            this.delete_button.TabIndex = 9;
+            this.delete_button.Text = "Delete";
+            this.delete_button.UseVisualStyleBackColor = true;
+            this.delete_button.Visible = false;
+            this.delete_button.Click += new System.EventHandler(this.delete_button_Click);
             // 
             // new_character_button
             // 
@@ -138,7 +146,7 @@
             // 
             // export_xml_button
             // 
-            this.export_xml_button.Location = new System.Drawing.Point(121, 244);
+            this.export_xml_button.Location = new System.Drawing.Point(518, 372);
             this.export_xml_button.Name = "export_xml_button";
             this.export_xml_button.Size = new System.Drawing.Size(75, 23);
             this.export_xml_button.TabIndex = 6;
@@ -156,16 +164,74 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // delete_button
+            // first_name_text
             // 
-            this.delete_button.Location = new System.Drawing.Point(31, 274);
-            this.delete_button.Name = "delete_button";
-            this.delete_button.Size = new System.Drawing.Size(75, 23);
-            this.delete_button.TabIndex = 9;
-            this.delete_button.Text = "Delete";
-            this.delete_button.UseVisualStyleBackColor = true;
-            this.delete_button.Visible = false;
-            this.delete_button.Click += new System.EventHandler(this.delete_button_Click);
+            this.first_name_text.Location = new System.Drawing.Point(56, 76);
+            this.first_name_text.MaxLength = 50;
+            this.first_name_text.Name = "first_name_text";
+            this.first_name_text.Size = new System.Drawing.Size(100, 20);
+            this.first_name_text.TabIndex = 11;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 83);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "First Name";
+            // 
+            // last_name_text
+            // 
+            this.last_name_text.Location = new System.Drawing.Point(229, 76);
+            this.last_name_text.MaxLength = 50;
+            this.last_name_text.Name = "last_name_text";
+            this.last_name_text.Size = new System.Drawing.Size(100, 20);
+            this.last_name_text.TabIndex = 13;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(176, 83);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(58, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Last Name";
+            // 
+            // surname_text
+            // 
+            this.surname_text.Location = new System.Drawing.Point(56, 115);
+            this.surname_text.MaxLength = 50;
+            this.surname_text.Name = "surname_text";
+            this.surname_text.Size = new System.Drawing.Size(100, 20);
+            this.surname_text.TabIndex = 15;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 122);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(49, 13);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Surname";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(109, 162);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 13);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Description";
+            // 
+            // description_text
+            // 
+            this.description_text.Location = new System.Drawing.Point(22, 178);
+            this.description_text.MaxLength = 1000;
+            this.description_text.Name = "description_text";
+            this.description_text.Size = new System.Drawing.Size(297, 161);
+            this.description_text.TabIndex = 17;
+            this.description_text.Text = "";
             // 
             // Form1
             // 
@@ -186,9 +252,7 @@
 
         private System.Windows.Forms.Button insert_character_button;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox name_text;
-        private System.Windows.Forms.TextBox fullname_text;
+        private System.Windows.Forms.TextBox name_id_text;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
@@ -196,6 +260,14 @@
         private System.Windows.Forms.ListBox character_list;
         private System.Windows.Forms.Button new_character_button;
         private System.Windows.Forms.Button delete_button;
+        private System.Windows.Forms.RichTextBox description_text;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox surname_text;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox last_name_text;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox first_name_text;
+        private System.Windows.Forms.Label label2;
     }
 }
 

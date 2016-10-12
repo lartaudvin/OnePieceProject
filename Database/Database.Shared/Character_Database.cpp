@@ -144,19 +144,9 @@ void Character_Database::importXml(const std::string& folder_path)
 	}
 }
 
-const std::string& Character_Database::getCharacterNameAt(int id) const
+const std::string& Character_Database::getCharacterNameIdAt(int id) const
 {
 	return m_characterList.at(id)->getName();
-}
-
-const std::string& Character_Database::getCharacterFullNameAt(int id) const
-{
-	return m_characterList.at(id)->getFullName();
-}
-
-void Character_Database::setCharacterFullNameAt(int id, const std::string& fullname)
-{
-	m_characterList.at(id)->setFullName(fullname);
 }
 
 void Character_Database::delete_character_by_name(std::string& name)

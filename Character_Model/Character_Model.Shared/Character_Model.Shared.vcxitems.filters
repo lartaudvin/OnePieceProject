@@ -2,8 +2,10 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Character_Model.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CharacterInfos.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character_Model.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CharacterInfos.cpp" />
   </ItemGroup>
 </Project>

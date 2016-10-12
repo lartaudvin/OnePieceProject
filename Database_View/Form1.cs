@@ -20,7 +20,7 @@ namespace Database_View
         [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr create_native_accessor();
         [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int insert_character_call(IntPtr ptr, string name, string fullname);
+        private static extern int insert_character_call(IntPtr ptr, string name);
         [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void export_xml_call(IntPtr ptr, string path);
         [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -32,15 +32,25 @@ namespace Database_View
         [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void get_name_at_call(IntPtr instance, StringBuilder name, int len, int id);
         [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void set_name_at_call(IntPtr instance, int id, string name);
-        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void get_fullname_at_call(IntPtr instance, StringBuilder name, int len, int id);
-        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void set_fullname_at_call(IntPtr instance, int id, string fullname);
-        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern int get_character_pos_by_name_call(IntPtr instance, string name);
         [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void remove_character_by_name_call(IntPtr instance, string name);
+        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void get_firstname_at_call(IntPtr instance, int id, StringBuilder firstname, int len);
+        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void set_firstname_at_call(IntPtr instance, int id, string firstname);
+        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void get_lastname_at_call(IntPtr instance, int id, StringBuilder lastname, int len);
+        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void set_lastname_at_call(IntPtr instance, int id, string lastname);
+        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void get_surname_at_call(IntPtr instance, int id, StringBuilder surname, int len);
+        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void set_surname_at_call(IntPtr instance, int id, string surname);
+        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void get_description_at_call(IntPtr instance, int id, StringBuilder description, int len);
+        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void set_description_at_call(IntPtr instance, int id, string description);
 
         public Form1()
         {
@@ -67,29 +77,44 @@ namespace Database_View
             this.setCharacterToNew();
         }
 
+        private void update_database_character(string character_name)
+        {
+            int pos = get_character_pos_by_name_call(m_nativeAccessor_ptr, character_name);
+            string character_firstname = this.first_name_text.Text;
+            this.first_name_text.Text = "";
+            string character_lastname = this.last_name_text.Text;
+            this.last_name_text.Text = "";
+            string character_surname = this.surname_text.Text;
+            this.first_name_text.Text = "";
+            string character_description = this.description_text.Text;
+            this.description_text.Text = "";
+            set_firstname_at_call(m_nativeAccessor_ptr, pos, character_firstname);
+            set_lastname_at_call(m_nativeAccessor_ptr, pos, character_lastname);
+            set_surname_at_call(m_nativeAccessor_ptr, pos, character_surname);
+            set_description_at_call(m_nativeAccessor_ptr, pos, character_description);
+            updateCharacterList();
+        }
+
         private void insert_character()
         {
-            string character_name = this.name_text.Text;
+            string character_name = this.name_id_text.Text;
             if(!character_name.Equals(""))
             {
-                this.name_text.Text = "";
-                string character_fullname = this.fullname_text.Text;
-                this.fullname_text.Text = "";
-                int result = insert_character_call(m_nativeAccessor_ptr, character_name, character_fullname);
+                this.name_id_text.Text = "";
+                int result = insert_character_call(m_nativeAccessor_ptr, character_name);
                 if (result != -1)
                 {
-                    updateCharacterList();
+                    update_database_character(character_name);
                 }
             }
         }
 
         private void modify_character()
         {
-            string character_name = this.name_text.Text;
+            string character_name = this.name_id_text.Text;
             if (!character_name.Equals(""))
             {
-                int pos = get_character_pos_by_name_call(m_nativeAccessor_ptr, character_name);
-                set_fullname_at_call(m_nativeAccessor_ptr, pos, this.fullname_text.Text);
+                update_database_character(character_name);
                 updateCharacterList();
             }
         }
@@ -139,15 +164,27 @@ namespace Database_View
             new_character_button.Visible = true;
             m_insert = false;
             insert_character_button.Text = "Modify";
-            name_text.ReadOnly = true;
+            name_id_text.ReadOnly = true;
             int pos = get_character_pos_by_name_call(m_nativeAccessor_ptr, name);
-            StringBuilder sb = new StringBuilder(50);
-            get_name_at_call(m_nativeAccessor_ptr, sb, 50, pos);
-            name_text.Text = sb.ToString();
+            StringBuilder sb = new StringBuilder(name_id_text.MaxLength);
+            get_name_at_call(m_nativeAccessor_ptr, sb, name_id_text.MaxLength, pos);
+            name_id_text.Text = sb.ToString();
             sb.Clear();
-            sb = new StringBuilder(50);
-            get_fullname_at_call(m_nativeAccessor_ptr, sb, 50, pos);
-            fullname_text.Text = sb.ToString();
+            sb = new StringBuilder(first_name_text.MaxLength);
+            get_firstname_at_call(m_nativeAccessor_ptr, pos, sb, first_name_text.MaxLength);
+            first_name_text.Text = sb.ToString();
+            sb.Clear();
+            sb = new StringBuilder(last_name_text.MaxLength);
+            get_lastname_at_call(m_nativeAccessor_ptr, pos, sb, last_name_text.MaxLength);
+            last_name_text.Text = sb.ToString();
+            sb.Clear();
+            sb = new StringBuilder(surname_text.MaxLength);
+            get_surname_at_call(m_nativeAccessor_ptr, pos, sb, surname_text.MaxLength);
+            surname_text.Text = sb.ToString();
+            sb.Clear();
+            sb = new StringBuilder(description_text.MaxLength);
+            get_description_at_call(m_nativeAccessor_ptr, pos, sb, description_text.MaxLength);
+            description_text.Text = sb.ToString();
             delete_button.Visible = true;
         }
 
@@ -167,10 +204,13 @@ namespace Database_View
         {
             m_insert = true;
             insert_character_button.Text = "Insert";
-            name_text.Text = "";
-            fullname_text.Text = "";
+            name_id_text.Text = "";
+            first_name_text.Text = "";
+            last_name_text.Text = "";
+            surname_text.Text = "";
+            description_text.Text = "";
             new_character_button.Visible = false;
-            name_text.ReadOnly = false;
+            name_id_text.ReadOnly = false;
             delete_button.Visible = false;
         }
 

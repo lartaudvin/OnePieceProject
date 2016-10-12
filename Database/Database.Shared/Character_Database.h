@@ -30,10 +30,7 @@ public:
 
 	void importXml(const std::string& folder_path);
 
-	const std::string& getCharacterNameAt(int id) const;
-
-	const std::string& getCharacterFullNameAt(int id) const;
-	void setCharacterFullNameAt(int id, const std::string& fullname);
+	const std::string& getCharacterNameIdAt(int id) const;
 
 	void delete_character_by_name(std::string& name);
 

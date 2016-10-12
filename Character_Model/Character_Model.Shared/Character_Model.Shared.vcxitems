@@ -14,9 +14,11 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CharacterInfos.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Character_Model.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CharacterInfos.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Character_Model.cpp" />
   </ItemGroup>
   <ItemGroup>

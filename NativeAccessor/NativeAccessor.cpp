@@ -16,15 +16,21 @@ public:
 	NativeAccessor_Impl();
 	~NativeAccessor_Impl();
 
-	void insert_character(const std::string& name, const std::string& fullname);
+	void insert_character(const std::string& name);
 	void export_xml(const std::string& path) const;
 	void import_xml(const std::string& path);
-	std::string get_name_at(int id) const;
-	std::string get_fullname_at(int id) const;
-	void set_fullname_at(int id, const std::string& fullname);
+	std::string get_name_id_at(int id) const;
 	int count_characters() const;
-	int get_character_pos_by_name(std::string& name) const;
-	void remove_character_by_name(std::string& name) const;
+	int get_character_pos_by_name_id(std::string& name) const;
+	void remove_character_by_name_id(std::string& name) const;
+	std::string get_firstname_at(int id) const;
+	void set_firstname_at(int id, const std::string& firstname);
+	std::string get_lastname_at(int id) const;
+	void set_lastname_at(int id, const std::string& lastname);
+	std::string get_surname_at(int id) const;
+	void set_surname_at(int id, const std::string& surname);
+	std::string get_description_at(int id) const;
+	void set_description_at(int id, const std::string& description);
 
 private:
 
@@ -41,11 +47,11 @@ Native_Accessor::~Native_Accessor()
 {
 }
 
-void Native_Accessor::insert_character(const std::string& name, const std::string& fullname)
+void Native_Accessor::insert_character(const std::string& name)
 {
 	try
 	{
-		m_pImpl->insert_character(name, fullname);
+		m_pImpl->insert_character(name);
 	}
 	catch (...)
 	{
@@ -70,27 +76,57 @@ int Native_Accessor::count_characters() const
 
 std::string Native_Accessor::get_name_at(int id) const
 {
-	return m_pImpl->get_name_at(id);
-}
-
-std::string Native_Accessor::get_fullname_at(int id) const
-{
-	return m_pImpl->get_fullname_at(id);
-}
-
-void Native_Accessor::set_fullname_at(int id, const std::string& fullname)
-{
-	m_pImpl->set_fullname_at(id, fullname);
+	return m_pImpl->get_name_id_at(id);
 }
 
 int Native_Accessor::get_character_pos_by_name(std::string& name) const
 {
-	return m_pImpl->get_character_pos_by_name(name);
+	return m_pImpl->get_character_pos_by_name_id(name);
 }
 
 void Native_Accessor::remove_character_by_name(std::string& name) const
 {
-	return m_pImpl->remove_character_by_name(name);
+	return m_pImpl->remove_character_by_name_id(name);
+}
+
+std::string Native_Accessor::get_firstname_at(int id) const
+{
+	return m_pImpl->get_firstname_at(id);
+}
+
+void Native_Accessor::set_firstname_at(int id, const std::string& firstname)
+{
+	m_pImpl->set_firstname_at(id, firstname);
+}
+
+std::string Native_Accessor::get_lastname_at(int id) const
+{
+	return m_pImpl->get_lastname_at(id);
+}
+
+void Native_Accessor::set_lastname_at(int id, const std::string& lastname)
+{
+	m_pImpl->set_lastname_at(id, lastname);
+}
+
+std::string Native_Accessor::get_surname_at(int id) const
+{
+	return m_pImpl->get_surname_at(id);
+}
+
+void Native_Accessor::set_surname_at(int id, const std::string& surname)
+{
+	m_pImpl->set_surname_at(id, surname);
+}
+
+std::string Native_Accessor::get_description_at(int id) const
+{
+	return m_pImpl->get_description_at(id);
+}
+
+void Native_Accessor::set_description_at(int id, const std::string& description)
+{
+	m_pImpl->set_description_at(id, description);
 }
 
 Native_Accessor::NativeAccessor_Impl::NativeAccessor_Impl()
@@ -102,11 +138,11 @@ Native_Accessor::NativeAccessor_Impl::~NativeAccessor_Impl()
 {
 }
 
-void Native_Accessor::NativeAccessor_Impl::insert_character(const std::string& name, const std::string& fullname)
+void Native_Accessor::NativeAccessor_Impl::insert_character(const std::string& name)
 {
 	try
 	{
-		m_database->insert_character(std::make_unique<Character_Model>(name, fullname));
+		m_database->insert_character(std::make_unique<Character_Model>(name));
 	}
 	catch (...)
 	{
@@ -124,19 +160,9 @@ void Native_Accessor::NativeAccessor_Impl::import_xml(const std::string&  path)
 	m_database->importXml(path);
 }
 
-std::string Native_Accessor::NativeAccessor_Impl::get_name_at(int id) const
+std::string Native_Accessor::NativeAccessor_Impl::get_name_id_at(int id) const
 {
-	return m_database->getCharacterNameAt(id);
-}
-
-std::string Native_Accessor::NativeAccessor_Impl::get_fullname_at(int id) const
-{
-	return m_database->getCharacterFullNameAt(id);
-}
-
-void Native_Accessor::NativeAccessor_Impl::set_fullname_at(int id, const std::string& fullname)
-{
-	return m_database->setCharacterFullNameAt(id, fullname);
+	return m_database->getCharacterNameIdAt(id);
 }
 
 int Native_Accessor::NativeAccessor_Impl::count_characters() const
@@ -144,14 +170,54 @@ int Native_Accessor::NativeAccessor_Impl::count_characters() const
 	return m_database->countCharacters();
 }
 
-int Native_Accessor::NativeAccessor_Impl::get_character_pos_by_name(std::string& name) const
+int Native_Accessor::NativeAccessor_Impl::get_character_pos_by_name_id(std::string& name) const
 {
 	return m_database->getCharacterPosByName(name);
 }
 
-void Native_Accessor::NativeAccessor_Impl::remove_character_by_name(std::string& name) const
+void Native_Accessor::NativeAccessor_Impl::remove_character_by_name_id(std::string& name) const
 {
 	m_database->delete_character_by_name(name);
+}
+
+std::string Native_Accessor::NativeAccessor_Impl::get_firstname_at(int id) const
+{
+	return m_database->getCharacterAt(id)->getInfos().getFirstName();
+}
+
+void Native_Accessor::NativeAccessor_Impl::set_firstname_at(int id, const std::string& firstname)
+{
+	m_database->getCharacterAt(id)->getInfos().setFirstName(firstname);
+}
+
+std::string Native_Accessor::NativeAccessor_Impl::get_lastname_at(int id) const
+{
+	return m_database->getCharacterAt(id)->getInfos().getLastName();
+}
+
+void Native_Accessor::NativeAccessor_Impl::set_lastname_at(int id, const std::string& lastname)
+{
+	m_database->getCharacterAt(id)->getInfos().setLastName(lastname);
+}
+
+std::string Native_Accessor::NativeAccessor_Impl::get_surname_at(int id) const
+{
+	return m_database->getCharacterAt(id)->getInfos().getSurname();
+}
+
+void Native_Accessor::NativeAccessor_Impl::set_surname_at(int id, const std::string& surname)
+{
+	m_database->getCharacterAt(id)->getInfos().setSurname(surname);
+}
+
+std::string Native_Accessor::NativeAccessor_Impl::get_description_at(int id) const
+{
+	return m_database->getCharacterAt(id)->getInfos().getDescription();
+}
+
+void Native_Accessor::NativeAccessor_Impl::set_description_at(int id, const std::string& description)
+{
+	m_database->getCharacterAt(id)->getInfos().setDescription(description);
 }
 
 DLLAPI void* create_native_accessor()
@@ -160,16 +226,15 @@ DLLAPI void* create_native_accessor()
 	return (void*)accessor;
 }
 
-DLLAPI int insert_character_call(void* instance, const char* name, const char* fullname)
+DLLAPI int insert_character_call(void* instance, const char* name)
 {
 	const std::string string_name(name);
-	const std::string string_fullname(fullname);
 	Native_Accessor *accessor = (Native_Accessor*)instance;
 	try
 	{
-		accessor->insert_character(string_name, string_fullname);
+		accessor->insert_character(string_name);
 	}
-	catch (ExceptionManager::key_already_exists* e)
+	catch (ExceptionManager::key_already_exists*)
 	{
 		return -1;
 	}
@@ -209,19 +274,6 @@ DLLAPI void get_name_at_call(void* instance, char* name, int len, int id)
 	memcpy(name, accessor->get_name_at(id).c_str(), len);
 }
 
-DLLAPI void get_fullname_at_call(void* instance, char* fullname, int len, int id)
-{
-	Native_Accessor *accessor = (Native_Accessor*)instance;
-	memcpy(fullname, accessor->get_fullname_at(id).c_str(), len);
-}
-
-DLLAPI void set_fullname_at_call(void* instance, int id, const char* fullname)
-{
-	Native_Accessor *accessor = (Native_Accessor*)instance;
-	const std::string &fullname_str(fullname);
-	accessor->set_fullname_at(id, fullname_str);
-}
-
 DLLAPI int get_character_pos_by_name_call(void* instance, const char* name)
 {
 	Native_Accessor *accessor = (Native_Accessor*)instance;
@@ -232,4 +284,52 @@ DLLAPI void remove_character_by_name_call(void* instance, const char* name)
 {
 	Native_Accessor *accessor = (Native_Accessor*)instance;
 	accessor->remove_character_by_name(std::string(name));
+}
+
+DLLAPI void get_firstname_at_call(void* instance, int id, char* firstname, int len)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	memcpy(firstname, accessor->get_firstname_at(id).c_str(), len);
+}
+
+DLLAPI void set_firstname_at_call(void* instance, int id, const char* firstname)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	accessor->set_firstname_at(id, string(firstname));
+}
+
+DLLAPI void get_lastname_at_call(void* instance, int id, char* lastname, int len)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	memcpy(lastname, accessor->get_lastname_at(id).c_str(), len);
+}
+
+DLLAPI void set_lastname_at_call(void* instance, int id, const char* lastname)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	accessor->set_lastname_at(id, string(lastname));
+}
+
+DLLAPI void get_surname_at_call(void* instance, int id, char* surname, int len)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	memcpy(surname, accessor->get_surname_at(id).c_str(), len);
+}
+
+DLLAPI void set_surname_at_call(void* instance, int id, const char* surname)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	accessor->set_surname_at(id, string(surname));
+}
+
+DLLAPI void get_description_at_call(void* instance, int id, char* description, int len)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	memcpy(description, accessor->get_description_at(id).c_str(), len);
+}
+
+DLLAPI void set_description_at_call(void* instance, int id, const char* description)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	accessor->set_description_at(id, string(description));
 }
