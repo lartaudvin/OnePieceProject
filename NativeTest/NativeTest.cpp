@@ -16,10 +16,7 @@ int main()
 	Character_Database *database = new Character_Database();
 
 	database->insert_character(std::make_unique<Character_Model>("Luffy", "Monkey D. Luffy"));
-	char* name = (char*) malloc(sizeof(char) * 50);
-	//database->insert_character(new CharacterModel::Character_Model("Zoro", "Zoro"));
-
-	//database->importXml(character_path);
+	database->setCharacterFullNameAt(0, "toto");
 
 	delete database;
 

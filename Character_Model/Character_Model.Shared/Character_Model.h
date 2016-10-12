@@ -14,7 +14,6 @@ public:
 
 	~Character_Model();
 	const std::string& getName() const;
-	void setName(const std::string& name);
 	const std::string& getFullName() const;
 	void setFullName(const std::string& name);
 

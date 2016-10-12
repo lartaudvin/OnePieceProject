@@ -20,10 +20,11 @@ public:
 	void export_xml(const std::string& path) const;
 	void import_xml(const std::string& path);
 	std::string get_name_at(int id) const;
-	void set_name_at(int id, const std::string& name);
 	std::string get_fullname_at(int id) const;
 	void set_fullname_at(int id, const std::string& fullname);
-	int count_characters();
+	int count_characters() const;
+	int get_character_pos_by_name(std::string& name) const;
+	void remove_character_by_name(std::string& name) const;
 
 private:
 
@@ -72,11 +73,6 @@ std::string Native_Accessor::get_name_at(int id) const
 	return m_pImpl->get_name_at(id);
 }
 
-void Native_Accessor::set_name_at(int id, const std::string& name)
-{
-	m_pImpl->set_name_at(id, name);
-}
-
 std::string Native_Accessor::get_fullname_at(int id) const
 {
 	return m_pImpl->get_fullname_at(id);
@@ -85,6 +81,16 @@ std::string Native_Accessor::get_fullname_at(int id) const
 void Native_Accessor::set_fullname_at(int id, const std::string& fullname)
 {
 	m_pImpl->set_fullname_at(id, fullname);
+}
+
+int Native_Accessor::get_character_pos_by_name(std::string& name) const
+{
+	return m_pImpl->get_character_pos_by_name(name);
+}
+
+void Native_Accessor::remove_character_by_name(std::string& name) const
+{
+	return m_pImpl->remove_character_by_name(name);
 }
 
 Native_Accessor::NativeAccessor_Impl::NativeAccessor_Impl()
@@ -123,11 +129,6 @@ std::string Native_Accessor::NativeAccessor_Impl::get_name_at(int id) const
 	return m_database->getCharacterNameAt(id);
 }
 
-void Native_Accessor::NativeAccessor_Impl::set_name_at(int id, const std::string& name)
-{
-	m_database->setCharacterNameAt(id, name);
-}
-
 std::string Native_Accessor::NativeAccessor_Impl::get_fullname_at(int id) const
 {
 	return m_database->getCharacterFullNameAt(id);
@@ -138,9 +139,19 @@ void Native_Accessor::NativeAccessor_Impl::set_fullname_at(int id, const std::st
 	return m_database->setCharacterFullNameAt(id, fullname);
 }
 
-int Native_Accessor::NativeAccessor_Impl::count_characters()
+int Native_Accessor::NativeAccessor_Impl::count_characters() const
 {
 	return m_database->countCharacters();
+}
+
+int Native_Accessor::NativeAccessor_Impl::get_character_pos_by_name(std::string& name) const
+{
+	return m_database->getCharacterPosByName(name);
+}
+
+void Native_Accessor::NativeAccessor_Impl::remove_character_by_name(std::string& name) const
+{
+	m_database->delete_character_by_name(name);
 }
 
 DLLAPI void* create_native_accessor()
@@ -198,12 +209,6 @@ DLLAPI void get_name_at_call(void* instance, char* name, int len, int id)
 	memcpy(name, accessor->get_name_at(id).c_str(), len);
 }
 
-DLLAPI void set_name_at_call(void* instance, int id, const char* name)
-{
-	Native_Accessor *accessor = (Native_Accessor*)instance;
-	accessor->set_name_at(id, string(name));
-}
-
 DLLAPI void get_fullname_at_call(void* instance, char* fullname, int len, int id)
 {
 	Native_Accessor *accessor = (Native_Accessor*)instance;
@@ -214,4 +219,16 @@ DLLAPI void set_fullname_at_call(void* instance, int id, const char* fullname)
 {
 	Native_Accessor *accessor = (Native_Accessor*)instance;
 	accessor->set_fullname_at(id, string(fullname));
+}
+
+DLLAPI int get_character_pos_by_name_call(void* instance, const char* name)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	return accessor->get_character_pos_by_name(string(name));
+}
+
+DLLAPI void remove_character_by_name_call(void* instance, const char* name)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	accessor->remove_character_by_name(std::string(name));
 }

@@ -58,6 +58,20 @@ Character_Model* Character_Database::getCharacterByName(const std::string& name)
 	return nullptr;
 }
 
+int Character_Database::getCharacterPosByName(const std::string& name) const
+{
+	int pos = 0;
+	for (auto&& character : m_characterList)
+	{
+		if (character->getName().compare(name) == 0)
+		{
+			return pos;
+		}
+		pos++;
+	}
+	return -1;
+}
+
 void Character_Database::exportXml(const std::string& folder_path) const
 {
 	if (!exists(folder_path))
@@ -135,11 +149,6 @@ const std::string& Character_Database::getCharacterNameAt(int id) const
 	return m_characterList.at(id)->getName();
 }
 
-void Character_Database::setCharacterNameAt(int id, const std::string& name)
-{
-	m_characterList.at(id)->setName(name);
-}
-
 const std::string& Character_Database::getCharacterFullNameAt(int id) const
 {
 	return m_characterList.at(id)->getFullName();
@@ -148,6 +157,12 @@ const std::string& Character_Database::getCharacterFullNameAt(int id) const
 void Character_Database::setCharacterFullNameAt(int id, const std::string& fullname)
 {
 	m_characterList.at(id)->setFullName(fullname);
+}
+
+void Character_Database::delete_character_by_name(std::string& name)
+{
+	int pos_to_remove = getCharacterPosByName(name);
+	m_characterList.erase(m_characterList.begin() + pos_to_remove);
 }
 
 int Character_Database::countCharacters() const

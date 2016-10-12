@@ -24,15 +24,18 @@ public:
 
 	Character_Model* getCharacterByName(const std::string& name);
 
+	int getCharacterPosByName(const std::string& name) const;
+
 	void exportXml(const std::string& folder_path) const;
 
 	void importXml(const std::string& folder_path);
 
 	const std::string& getCharacterNameAt(int id) const;
-	void setCharacterNameAt(int id, const std::string& name);
 
 	const std::string& getCharacterFullNameAt(int id) const;
 	void setCharacterFullNameAt(int id, const std::string& fullname);
+
+	void delete_character_by_name(std::string& name);
 
 	int countCharacters() const;
 

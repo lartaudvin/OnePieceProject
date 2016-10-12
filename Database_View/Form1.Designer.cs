@@ -35,9 +35,11 @@
             this.fullname_text = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.new_character_button = new System.Windows.Forms.Button();
+            this.character_list = new System.Windows.Forms.ListBox();
             this.export_xml_button = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.character_list = new System.Windows.Forms.ListBox();
+            this.delete_button = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -96,6 +98,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.delete_button);
+            this.tabPage1.Controls.Add(this.new_character_button);
             this.tabPage1.Controls.Add(this.character_list);
             this.tabPage1.Controls.Add(this.export_xml_button);
             this.tabPage1.Controls.Add(this.name_text);
@@ -110,6 +114,27 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Character";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // new_character_button
+            // 
+            this.new_character_button.Location = new System.Drawing.Point(518, 230);
+            this.new_character_button.Name = "new_character_button";
+            this.new_character_button.Size = new System.Drawing.Size(75, 23);
+            this.new_character_button.TabIndex = 8;
+            this.new_character_button.Text = "New";
+            this.new_character_button.UseVisualStyleBackColor = true;
+            this.new_character_button.Visible = false;
+            this.new_character_button.Click += new System.EventHandler(this.new_character_button_Click);
+            // 
+            // character_list
+            // 
+            this.character_list.FormattingEnabled = true;
+            this.character_list.Location = new System.Drawing.Point(480, 76);
+            this.character_list.Name = "character_list";
+            this.character_list.Size = new System.Drawing.Size(172, 147);
+            this.character_list.Sorted = true;
+            this.character_list.TabIndex = 7;
+            this.character_list.SelectedIndexChanged += new System.EventHandler(this.character_list_SelectedIndexChanged);
             // 
             // export_xml_button
             // 
@@ -131,13 +156,16 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // character_list
+            // delete_button
             // 
-            this.character_list.FormattingEnabled = true;
-            this.character_list.Location = new System.Drawing.Point(480, 76);
-            this.character_list.Name = "character_list";
-            this.character_list.Size = new System.Drawing.Size(172, 147);
-            this.character_list.TabIndex = 7;
+            this.delete_button.Location = new System.Drawing.Point(31, 274);
+            this.delete_button.Name = "delete_button";
+            this.delete_button.Size = new System.Drawing.Size(75, 23);
+            this.delete_button.TabIndex = 9;
+            this.delete_button.Text = "Delete";
+            this.delete_button.UseVisualStyleBackColor = true;
+            this.delete_button.Visible = false;
+            this.delete_button.Click += new System.EventHandler(this.delete_button_Click);
             // 
             // Form1
             // 
@@ -166,6 +194,8 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button export_xml_button;
         private System.Windows.Forms.ListBox character_list;
+        private System.Windows.Forms.Button new_character_button;
+        private System.Windows.Forms.Button delete_button;
     }
 }
 
