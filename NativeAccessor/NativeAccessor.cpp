@@ -212,13 +212,14 @@ DLLAPI void get_name_at_call(void* instance, char* name, int len, int id)
 DLLAPI void get_fullname_at_call(void* instance, char* fullname, int len, int id)
 {
 	Native_Accessor *accessor = (Native_Accessor*)instance;
-	memcpy(fullname, accessor->get_name_at(id).c_str(), len);
+	memcpy(fullname, accessor->get_fullname_at(id).c_str(), len);
 }
 
 DLLAPI void set_fullname_at_call(void* instance, int id, const char* fullname)
 {
 	Native_Accessor *accessor = (Native_Accessor*)instance;
-	accessor->set_fullname_at(id, string(fullname));
+	const std::string &fullname_str(fullname);
+	accessor->set_fullname_at(id, fullname_str);
 }
 
 DLLAPI int get_character_pos_by_name_call(void* instance, const char* name)

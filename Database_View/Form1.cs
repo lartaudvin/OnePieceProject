@@ -64,6 +64,7 @@ namespace Database_View
                 this.character_list.Items.Add(sb.ToString());
                 sb.Clear();
             }
+            this.setCharacterToNew();
         }
 
         private void insert_character()
@@ -89,10 +90,6 @@ namespace Database_View
             {
                 int pos = get_character_pos_by_name_call(m_nativeAccessor_ptr, character_name);
                 set_fullname_at_call(m_nativeAccessor_ptr, pos, this.fullname_text.Text);
-                StringBuilder sb = new StringBuilder(50);
-                get_fullname_at_call(m_nativeAccessor_ptr, sb, 50, pos);
-                string name = sb.ToString();
-                Console.Write(name);
                 updateCharacterList();
             }
         }
