@@ -15,8 +15,7 @@ int main()
 	string character_path = "F:\\Users\\Vince\\Documents\\Visual Studio 2015\\Projects\\One Piece Project\\Resources\\Characters";
 	Character_Database *database = new Character_Database();
 
-	database->insert_character(std::make_unique<Character_Model>("Luffy", "Monkey D. Luffy"));
-	database->setCharacterFullNameAt(0, "toto");
+	database->importXml(character_path);
 
 	delete database;
 

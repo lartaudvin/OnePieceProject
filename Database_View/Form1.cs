@@ -151,6 +151,7 @@ namespace Database_View
                 string folder_path = fbd.SelectedPath;
                 import_xml_call(m_nativeAccessor_ptr, folder_path);
             }
+            updateCharacterList();
         }
 
         protected override void OnClosing(CancelEventArgs e)

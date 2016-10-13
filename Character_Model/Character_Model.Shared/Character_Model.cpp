@@ -45,7 +45,7 @@ void Character_Model::exportToXml(const std::string& folder_path) const
 	stream << folder_path << "\\header.xml";
 	write_xml(stream.str(), tree);
 
-	stream.clear();
+	stream = stringstream();
 	stream << folder_path << "\\infos.xml";
 	m_infos->export_xml(stream.str());
 }
@@ -58,7 +58,7 @@ void Character_Model::importFromXml(const string& folder_path)
 	read_xml(stream.str(), tree);
 	m_name_id = tree.get<string>("name");
 
-	stream.clear();
+	stream = stringstream();
 	stream << folder_path << "\\infos.xml";
 	m_infos->import_xml(stream.str());
 }

@@ -97,11 +97,6 @@ void Character_Database::exportXml(const std::string& folder_path) const
 			stream << folder_path << "\\" << current_name;
 			auto current_folder_path = stream.str();
 
-			if (exists(current_folder_path))
-			{
-				create_directory(current_folder_path);
-			}
-
 			current_model->exportToXml(current_folder_path);
 		}
 		catch (...)
