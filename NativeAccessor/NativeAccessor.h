@@ -29,6 +29,8 @@ public:
 	void set_surname_at(int id, const std::string& surname);
 	std::string get_description_at(int id) const;
 	void set_description_at(int id, const std::string& description);
+	std::string get_character_photo_ressource_path(int id) const;
+	void set_character_photo_ressource_path(int id, std::string& path);
 
 private:
 	//The implementator of the class used to hide all the methods of the C++ database
@@ -58,6 +60,8 @@ extern "C" {
 	DLLAPI void set_surname_at_call(void* instance, int id, const char* surname);
 	DLLAPI void get_description_at_call(void* instance, int id, char* description, int len);
 	DLLAPI void set_description_at_call(void* instance, int id, const char* description);
+	DLLAPI void get_character_photo_ressource_path(void* instance, int id, char* path, int len);
+	DLLAPI void set_character_photo_ressource_path(void* instance, int id, const char* path);
 
 #if __cplusplus
 }

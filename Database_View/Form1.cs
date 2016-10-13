@@ -16,6 +16,7 @@ namespace Database_View
         private IntPtr m_nativeAccessor_ptr;
         private bool m_insert = true;
         private static string DEFAULT_RESOUCES_PATH = "F:\\Users\\Vince\\Documents\\Visual Studio 2015\\Projects\\One Piece Project\\Resources";
+        private static string m_currentCharacterImageRelativePath;
 
         [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr create_native_accessor();
@@ -51,6 +52,10 @@ namespace Database_View
         private static extern void get_description_at_call(IntPtr instance, int id, StringBuilder description, int len);
         [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void set_description_at_call(IntPtr instance, int id, string description);
+        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void get_character_photo_ressource_path(IntPtr instance, int id, StringBuilder path, int len);
+        [DllImport("NativeAccessor.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void set_character_photo_ressource_path(IntPtr instance, int id, string path);
 
         public Form1()
         {
@@ -88,10 +93,15 @@ namespace Database_View
             this.first_name_text.Text = "";
             string character_description = this.description_text.Text;
             this.description_text.Text = "";
+            if (this.character_photo_picture.Image != null)
+            {
+                this.character_photo_picture.Image.Dispose();
+            }
             set_firstname_at_call(m_nativeAccessor_ptr, pos, character_firstname);
             set_lastname_at_call(m_nativeAccessor_ptr, pos, character_lastname);
             set_surname_at_call(m_nativeAccessor_ptr, pos, character_surname);
             set_description_at_call(m_nativeAccessor_ptr, pos, character_description);
+            set_character_photo_ressource_path(m_nativeAccessor_ptr, pos, DEFAULT_RESOUCES_PATH + "\\Image\\Characters\\" + m_currentCharacterImageRelativePath);
             updateCharacterList();
         }
 
@@ -187,6 +197,15 @@ namespace Database_View
             get_description_at_call(m_nativeAccessor_ptr, pos, sb, description_text.MaxLength);
             description_text.Text = sb.ToString();
             delete_button.Visible = true;
+            if (this.character_photo_picture.Image != null)
+            {
+                this.character_photo_picture.Image.Dispose();
+            }
+            sb.Clear();
+            sb = new StringBuilder(100);
+            get_character_photo_ressource_path(m_nativeAccessor_ptr, pos, sb, 100);
+            m_currentCharacterImageRelativePath = sb.ToString();
+            this.character_photo_picture.Image = Bitmap.FromFile(DEFAULT_RESOUCES_PATH + "\\Image\\Characters\\" + m_currentCharacterImageRelativePath);
         }
 
         private void character_list_SelectedIndexChanged(object sender, EventArgs e)
@@ -213,6 +232,11 @@ namespace Database_View
             new_character_button.Visible = false;
             name_id_text.ReadOnly = false;
             delete_button.Visible = false;
+            if (this.character_photo_picture.Image != null)
+            {
+                this.character_photo_picture.Image.Dispose();
+            }
+            m_currentCharacterImageRelativePath = "";
         }
 
         private void new_character_button_Click(object sender, EventArgs e)
@@ -226,6 +250,21 @@ namespace Database_View
             remove_character_by_name_call(m_nativeAccessor_ptr, name_to_delete);
             updateCharacterList();
             setCharacterToNew();
+        }
+
+        private void import_photo_button_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Image Files (.png, .jpg, .bmp)|*.png; *.jpg; *.bmp";
+            if(ofd.ShowDialog() == DialogResult.OK)
+            {
+                m_currentCharacterImageRelativePath = ofd.FileName.Remove(0, (DEFAULT_RESOUCES_PATH + "\\Image\\Characters\\").Length);
+                if(this.character_photo_picture.Image != null)
+                {
+                    this.character_photo_picture.Image.Dispose();
+                }
+                this.character_photo_picture.Image = Bitmap.FromFile(m_currentCharacterImageRelativePath);
+            }
         }
     }
 }

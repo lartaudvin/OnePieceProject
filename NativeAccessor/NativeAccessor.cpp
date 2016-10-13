@@ -31,6 +31,8 @@ public:
 	void set_surname_at(int id, const std::string& surname);
 	std::string get_description_at(int id) const;
 	void set_description_at(int id, const std::string& description);
+	std::string get_character_photo_ressource_path(int id) const;
+	void set_character_photo_ressource_path(int id, std::string& path);
 
 private:
 
@@ -129,6 +131,16 @@ void Native_Accessor::set_description_at(int id, const std::string& description)
 	m_pImpl->set_description_at(id, description);
 }
 
+std::string Native_Accessor::get_character_photo_ressource_path(int id) const
+{
+	return m_pImpl->get_character_photo_ressource_path(id);
+}
+
+void Native_Accessor::set_character_photo_ressource_path(int id, std::string& path)
+{
+	m_pImpl->set_character_photo_ressource_path(id, path);
+}
+
 Native_Accessor::NativeAccessor_Impl::NativeAccessor_Impl()
 	: m_database(std::make_unique<Character_Database>())
 {
@@ -218,6 +230,16 @@ std::string Native_Accessor::NativeAccessor_Impl::get_description_at(int id) con
 void Native_Accessor::NativeAccessor_Impl::set_description_at(int id, const std::string& description)
 {
 	m_database->getCharacterAt(id)->getInfos().setDescription(description);
+}
+
+std::string Native_Accessor::NativeAccessor_Impl::get_character_photo_ressource_path(int id) const
+{
+	return m_database->getCharacterAt(id)->getPhotoRessourcePath();
+}
+
+void Native_Accessor::NativeAccessor_Impl::set_character_photo_ressource_path(int id, std::string& path)
+{
+	m_database->getCharacterAt(id)->setPhotoRessourcePath(path);
 }
 
 DLLAPI void* create_native_accessor()
@@ -332,4 +354,16 @@ DLLAPI void set_description_at_call(void* instance, int id, const char* descript
 {
 	Native_Accessor *accessor = (Native_Accessor*)instance;
 	accessor->set_description_at(id, string(description));
+}
+
+DLLAPI void get_character_photo_ressource_path(void* instance, int id, char* path, int len)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	memcpy(path, accessor->get_character_photo_ressource_path(id).c_str(), len);
+}
+
+DLLAPI void set_character_photo_ressource_path(void* instance, int id, const char* path)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	accessor->set_character_photo_ressource_path(id, string(path));
 }

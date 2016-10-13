@@ -19,11 +19,15 @@ public:
 
 	void exportToXml(const std::string& folder_path) const;
 	void importFromXml(const std::string& folder_path);
+	const std::string& getPhotoRessourcePath() const;
+	void setPhotoRessourcePath(const std::string& path);
 
 private:
 
 	std::string m_name_id;
 	std::unique_ptr<CharacterInfos> m_infos;
+
+	std::string m_photo_ressource_path;
 };
 
 #endif

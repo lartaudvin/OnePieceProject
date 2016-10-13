@@ -72,9 +72,25 @@ void CharacterInfos::import_xml(const std::string path)
 {
 	ptree tree;
 	read_xml(path, tree);
-	m_first_name = tree.get<std::string>("firstname");
-	m_last_name = tree.get<std::string>("lastname");
-	m_surname = tree.get<std::string>("surname");
-	m_description = tree.get<std::string>("description");
+	try
+	{
+		m_first_name = tree.get<std::string>("firstname");
+	}
+	catch (...) {}
+	try
+	{
+		m_last_name = tree.get<std::string>("lastname");
+	}
+	catch (...) {}
+	try
+	{
+		m_surname = tree.get<std::string>("surname");
+	}
+	catch (...) {}
+	try
+	{
+		m_description = tree.get<std::string>("description");
+	}
+	catch (...) {}
 }
 
