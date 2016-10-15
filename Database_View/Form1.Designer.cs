@@ -33,6 +33,7 @@
             this.name_id_text = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.import_photo_button = new System.Windows.Forms.Button();
             this.character_photo_picture = new System.Windows.Forms.PictureBox();
             this.description_text = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -47,7 +48,6 @@
             this.character_list = new System.Windows.Forms.ListBox();
             this.export_xml_button = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.import_photo_button = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.character_photo_picture)).BeginInit();
@@ -117,11 +117,22 @@
             this.tabPage1.Text = "Character";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // import_photo_button
+            // 
+            this.import_photo_button.Location = new System.Drawing.Point(267, 206);
+            this.import_photo_button.Name = "import_photo_button";
+            this.import_photo_button.Size = new System.Drawing.Size(75, 23);
+            this.import_photo_button.TabIndex = 19;
+            this.import_photo_button.Text = "Import Photo";
+            this.import_photo_button.UseVisualStyleBackColor = true;
+            this.import_photo_button.Click += new System.EventHandler(this.import_photo_button_Click);
+            // 
             // character_photo_picture
             // 
             this.character_photo_picture.Location = new System.Drawing.Point(242, 18);
             this.character_photo_picture.Name = "character_photo_picture";
-            this.character_photo_picture.Size = new System.Drawing.Size(146, 143);
+            this.character_photo_picture.Size = new System.Drawing.Size(146, 182);
+            this.character_photo_picture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.character_photo_picture.TabIndex = 18;
             this.character_photo_picture.TabStop = false;
             // 
@@ -245,16 +256,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // import_photo_button
-            // 
-            this.import_photo_button.Location = new System.Drawing.Point(267, 168);
-            this.import_photo_button.Name = "import_photo_button";
-            this.import_photo_button.Size = new System.Drawing.Size(75, 23);
-            this.import_photo_button.TabIndex = 19;
-            this.import_photo_button.Text = "Import Photo";
-            this.import_photo_button.UseVisualStyleBackColor = true;
-            this.import_photo_button.Click += new System.EventHandler(this.import_photo_button_Click);
             // 
             // Form1
             // 

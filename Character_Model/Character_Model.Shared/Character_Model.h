@@ -26,8 +26,6 @@ private:
 
 	std::string m_name_id;
 	std::unique_ptr<CharacterInfos> m_infos;
-
-	std::string m_photo_ressource_path;
 };
 
 #endif
