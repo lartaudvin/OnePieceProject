@@ -41,7 +41,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Exception_Manager.Windows",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Exception_Manager.WindowsPhone", "Exception_Manager\Exception_Manager.WindowsPhone\Exception_Manager.WindowsPhone.vcxproj", "{C562EC28-8A9E-491B-98F6-DDFAB7C0ABCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database_View", "Database_View\Database_View.csproj", "{5CC9FF55-D7BD-4EDB-B68E-F6C7F1DBA00F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "Database_View\View.csproj", "{5CC9FF55-D7BD-4EDB-B68E-F6C7F1DBA00F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B6755974-86E4-4CD1-9F15-730D818F92BE} = {B6755974-86E4-4CD1-9F15-730D818F92BE}
 	EndProjectSection
@@ -62,18 +62,18 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Exception_Manager\Exception_Manager.Shared\Exception_Manager.Shared.vcxitems*{c562ec28-8a9e-491b-98f6-ddfab7c0abcf}*SharedItemsImports = 4
 		Database\Database.Shared\Database.Shared.vcxitems*{a199bfaf-fae4-402f-b996-ce986ad05b35}*SharedItemsImports = 9
-		Character_Model\Character_Model.Shared\Character_Model.Shared.vcxitems*{ea39a6ea-7928-49de-a0dd-4c8a4ce41b3c}*SharedItemsImports = 4
 		Database\Database.Shared\Database.Shared.vcxitems*{ea39a6ea-7928-49de-a0dd-4c8a4ce41b3c}*SharedItemsImports = 4
 		Exception_Manager\Exception_Manager.Shared\Exception_Manager.Shared.vcxitems*{ea39a6ea-7928-49de-a0dd-4c8a4ce41b3c}*SharedItemsImports = 4
+		Character_Model\Character_Model.Shared\Character_Model.Shared.vcxitems*{ea39a6ea-7928-49de-a0dd-4c8a4ce41b3c}*SharedItemsImports = 4
 		Exception_Manager\Exception_Manager.Shared\Exception_Manager.Shared.vcxitems*{97d59a77-7938-418e-94ec-0d9794100d37}*SharedItemsImports = 4
 		Character_Model\Character_Model.Shared\Character_Model.Shared.vcxitems*{83384373-bbc2-4ad6-908f-d6f437a36900}*SharedItemsImports = 4
 		Character_Model\Character_Model.Shared\Character_Model.Shared.vcxitems*{e59fc035-f0f7-46a8-b45c-e4a694d2d2dc}*SharedItemsImports = 9
 		Character_Model\Character_Model.Shared\Character_Model.Shared.vcxitems*{ffbd69b7-9aaa-4e56-9378-9cf32dccb210}*SharedItemsImports = 4
 		Database\Database.Shared\Database.Shared.vcxitems*{38340fe4-276a-4fd1-b012-190c9b767898}*SharedItemsImports = 4
 		Exception_Manager\Exception_Manager.Shared\Exception_Manager.Shared.vcxitems*{00dc7983-2f55-41f2-bc93-1e9b339d40b1}*SharedItemsImports = 9
-		Character_Model\Character_Model.Shared\Character_Model.Shared.vcxitems*{b6755974-86e4-4cd1-9f15-730d818f92be}*SharedItemsImports = 4
 		Database\Database.Shared\Database.Shared.vcxitems*{b6755974-86e4-4cd1-9f15-730d818f92be}*SharedItemsImports = 4
 		Exception_Manager\Exception_Manager.Shared\Exception_Manager.Shared.vcxitems*{b6755974-86e4-4cd1-9f15-730d818f92be}*SharedItemsImports = 4
+		Character_Model\Character_Model.Shared\Character_Model.Shared.vcxitems*{b6755974-86e4-4cd1-9f15-730d818f92be}*SharedItemsImports = 4
 		Database\Database.Shared\Database.Shared.vcxitems*{257bfce0-d6b9-4213-984a-a1731f5f184c}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
