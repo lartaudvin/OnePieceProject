@@ -106,7 +106,7 @@ void Character_Database::exportXml(const std::string& folder_path) const
 	}
 }
 
-void Character_Database::importXml(const std::string& folder_path)
+void Character_Database::importXml(const std::string& folder_path, int level)
 {
 	if (!exists(folder_path))
 	{
@@ -123,7 +123,7 @@ void Character_Database::importXml(const std::string& folder_path)
 			if (is_directory(current_path))
 			{
 				auto current_model = std::make_unique<Character_Model>();
-				current_model->importFromXml(current_path.string());
+				current_model->importFromXml(current_path.string(), level);
 
 				vector<string> tokens;
 				boost::split(tokens, current_path.string(), boost::is_any_of("\\"));

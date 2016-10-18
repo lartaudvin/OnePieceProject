@@ -28,7 +28,7 @@ public:
 
 	void exportXml(const std::string& folder_path) const;
 
-	void importXml(const std::string& folder_path);
+	void importXml(const std::string& folder_path, int level);
 
 	const std::string& getCharacterNameIdAt(int id) const;
 

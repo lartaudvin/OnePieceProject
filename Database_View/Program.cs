@@ -16,7 +16,7 @@ namespace Database_View
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new DatabaseView());
+            Application.Run(new MainForm());
         }
     }
 }

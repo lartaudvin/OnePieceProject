@@ -14,12 +14,16 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Caracteristics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CharacterInfos.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Character_Model.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)LevelBuilder.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Caracteristics.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CharacterInfos.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Character_Model.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)LevelBuilder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />

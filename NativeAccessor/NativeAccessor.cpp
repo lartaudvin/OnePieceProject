@@ -6,6 +6,8 @@
 #include <Character_Database.h>
 #include <Character_Model.h>
 #include <Exception_Manager/Exception_Manager.Shared/Exception_Manager.h>
+#include <LevelBuilder.h>
+#include <map>
 
 using namespace std;
 
@@ -18,11 +20,11 @@ public:
 
 	void insert_character(const std::string& name);
 	void export_xml(const std::string& path) const;
-	void import_xml(const std::string& path);
+	void import_xml(const std::string& path, int level);
 	std::string get_name_id_at(int id) const;
 	int count_characters() const;
-	int get_character_pos_by_name_id(std::string& name) const;
-	void remove_character_by_name_id(std::string& name) const;
+	int get_character_pos_by_name_id(const std::string& name) const;
+	void remove_character_by_name_id(std::string& name);
 	std::string get_firstname_at(int id) const;
 	void set_firstname_at(int id, const std::string& firstname);
 	std::string get_lastname_at(int id) const;
@@ -31,11 +33,18 @@ public:
 	void set_surname_at(int id, const std::string& surname);
 	std::string get_description_at(int id) const;
 	void set_description_at(int id, const std::string& description);
+	void add_or_set_level_at(int id, int level_label, int force, int intelligence, int charisme, int constitution, int dexterite);
+	int getLevelCount(int id) const;
+	int getForce(int id, int level) const;
+	int getIntelligence(int id, int level) const;
+	int getCharisme(int id, int level) const;
+	int getConstitution(int id, int level) const;
+	int getDexterite(int id, int level) const;
 
 private:
 
 	std::unique_ptr<Character_Database> m_database;
-
+	std::map<int, unique_ptr<LevelBuilder>> m_level_builders;
 };
 
 Native_Accessor::Native_Accessor()
@@ -64,9 +73,9 @@ void Native_Accessor::export_xml(const std::string&  path) const
 	m_pImpl->export_xml(path);
 }
 
-void Native_Accessor::import_xml(const std::string&  path)
+void Native_Accessor::import_xml(const std::string& path, int level)
 {
-	m_pImpl->import_xml(path);
+	m_pImpl->import_xml(path, level);
 }
 
 int Native_Accessor::count_characters() const
@@ -129,6 +138,41 @@ void Native_Accessor::set_description_at(int id, const std::string& description)
 	m_pImpl->set_description_at(id, description);
 }
 
+void Native_Accessor::add_or_set_level_at(int id, int level_label, int force, int intelligence, int charisme, int constitution, int dexterite)
+{
+	m_pImpl->add_or_set_level_at(id, level_label, force, intelligence, charisme, constitution, dexterite);
+}
+
+int Native_Accessor::getLevelCount(int id) const
+{
+	return m_pImpl->getLevelCount(id);
+}
+
+int Native_Accessor::getForce(int id, int level) const
+{
+	return m_pImpl->getForce(id, level);
+}
+
+int Native_Accessor::getIntelligence(int id, int level) const
+{
+	return m_pImpl->getIntelligence(id, level);
+}
+
+int Native_Accessor::getCharisme(int id, int level) const
+{
+	return m_pImpl->getCharisme(id, level);
+}
+
+int Native_Accessor::getConstitution(int id, int level) const
+{
+	return m_pImpl->getConstitution(id, level);
+}
+
+int Native_Accessor::getDexterite(int id, int level) const
+{
+	return m_pImpl->getDexterite(id, level);
+}
+
 Native_Accessor::NativeAccessor_Impl::NativeAccessor_Impl()
 	: m_database(std::make_unique<Character_Database>())
 {
@@ -143,6 +187,8 @@ void Native_Accessor::NativeAccessor_Impl::insert_character(const std::string& n
 	try
 	{
 		m_database->insert_character(std::make_unique<Character_Model>(name));
+		int pos = this->get_character_pos_by_name_id(name);
+		m_level_builders.insert(std::make_pair(pos, std::make_unique<LevelBuilder>(LevelBuilder())));
 	}
 	catch (...)
 	{
@@ -153,11 +199,21 @@ void Native_Accessor::NativeAccessor_Impl::insert_character(const std::string& n
 void Native_Accessor::NativeAccessor_Impl::export_xml(const std::string&  path) const
 {
 	m_database->exportXml(path);
+	for each (auto&& builder in m_level_builders)
+	{
+		m_database->getCharacterAt(builder.first)->exportLevelCaracteristics(path, *builder.second);
+	}
 }
 
-void Native_Accessor::NativeAccessor_Impl::import_xml(const std::string&  path)
+void Native_Accessor::NativeAccessor_Impl::import_xml(const std::string& path, int level)
 {
-	m_database->importXml(path);
+	m_database->importXml(path, level);
+	int characterCount = m_database->countCharacters();
+	for (int i = 0; i < characterCount; i++)
+	{
+		LevelBuilder builder{ m_database->getCharacterAt(i)->importLevelCaracteristics(path) };
+		m_level_builders.insert(std::make_pair(i, make_unique<LevelBuilder>(builder)));
+	}
 }
 
 std::string Native_Accessor::NativeAccessor_Impl::get_name_id_at(int id) const
@@ -170,14 +226,16 @@ int Native_Accessor::NativeAccessor_Impl::count_characters() const
 	return m_database->countCharacters();
 }
 
-int Native_Accessor::NativeAccessor_Impl::get_character_pos_by_name_id(std::string& name) const
+int Native_Accessor::NativeAccessor_Impl::get_character_pos_by_name_id(const std::string& name) const
 {
 	return m_database->getCharacterPosByName(name);
 }
 
-void Native_Accessor::NativeAccessor_Impl::remove_character_by_name_id(std::string& name) const
+void Native_Accessor::NativeAccessor_Impl::remove_character_by_name_id(std::string& name)
 {
+	int pos = this->get_character_pos_by_name_id(name);
 	m_database->delete_character_by_name(name);
+	m_level_builders.erase(pos);
 }
 
 std::string Native_Accessor::NativeAccessor_Impl::get_firstname_at(int id) const
@@ -220,6 +278,54 @@ void Native_Accessor::NativeAccessor_Impl::set_description_at(int id, const std:
 	m_database->getCharacterAt(id)->getInfos().setDescription(description);
 }
 
+void Native_Accessor::NativeAccessor_Impl::add_or_set_level_at(int id, int level_label, int force, int intelligence, int charisme, int constitution, int dexterite)
+{
+	try
+	{
+		m_level_builders.at(id)->addOrSetLevel(level_label, force, intelligence, charisme, constitution, dexterite);
+	}
+	catch (const std::out_of_range&)
+	{
+		LevelBuilder builder;
+		builder.addOrSetLevel(level_label, force, intelligence, charisme, constitution, dexterite);
+		m_level_builders.insert(make_pair(id, make_unique<LevelBuilder>(builder)));
+	}
+	catch (...)
+	{
+
+	}
+}
+
+int Native_Accessor::NativeAccessor_Impl::getForce(int id, int level) const
+{
+	return m_level_builders.at(id)->getCharacteristicByLevel(level).getBaseForce();
+}
+
+int Native_Accessor::NativeAccessor_Impl::getLevelCount(int id) const
+{
+	return m_level_builders.at(id)->count();
+}
+
+int Native_Accessor::NativeAccessor_Impl::getIntelligence(int id, int level) const
+{
+	return m_level_builders.at(id)->getCharacteristicByLevel(level).getBaseIntelligence();
+}
+
+int Native_Accessor::NativeAccessor_Impl::getCharisme(int id, int level) const
+{
+	return m_level_builders.at(id)->getCharacteristicByLevel(level).getBaseCharisme();
+}
+
+int Native_Accessor::NativeAccessor_Impl::getConstitution(int id, int level) const
+{
+	return m_level_builders.at(id)->getCharacteristicByLevel(level).getBaseConstitution();
+}
+
+int Native_Accessor::NativeAccessor_Impl::getDexterite(int id, int level) const
+{
+	return m_level_builders.at(id)->getCharacteristicByLevel(level).getBaseDexterite();
+}
+
 DLLAPI void* create_native_accessor()
 {
 	Native_Accessor *accessor = new Native_Accessor();
@@ -249,11 +355,11 @@ DLLAPI void export_xml_call(void* instance, const char* path)
 	accessor->export_xml(string_path);
 }
 
-DLLAPI void import_xml_call(void* instance, const char* path)
+DLLAPI void import_xml_call(void* instance, const char* path, int level)
 {
 	const std::string string_path(path);
 	Native_Accessor *accessor = (Native_Accessor*)instance;
-	accessor->import_xml(string_path);
+	accessor->import_xml(string_path, level);
 }
 
 DLLAPI void delete_native_accessor(void *instance)
@@ -332,4 +438,46 @@ DLLAPI void set_description_at_call(void* instance, int id, const char* descript
 {
 	Native_Accessor *accessor = (Native_Accessor*)instance;
 	accessor->set_description_at(id, string(description));
+}
+
+DLLAPI void add_or_set_level_at(void* instance, int id, int level_label, int force, int intelligence, int charisme, int constitution, int dexterite)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	accessor->add_or_set_level_at(id, level_label, force, intelligence, charisme, constitution, dexterite);
+}
+
+DLLAPI int getLevelCount(void* instance, int id)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	return accessor->getLevelCount(id);
+}
+
+DLLAPI int getForce(void* instance, int id, int level)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	return accessor->getForce(id, level);
+}
+
+DLLAPI int getIntelligence(void* instance, int id, int level)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	return accessor->getIntelligence(id, level);
+}
+
+DLLAPI int getCharisme(void* instance, int id, int level)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	return accessor->getCharisme(id, level);
+}
+
+DLLAPI int getConstitution(void* instance, int id, int level)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	return accessor->getConstitution(id, level);
+}
+
+DLLAPI int getDexterite(void* instance, int id, int level)
+{
+	Native_Accessor *accessor = (Native_Accessor*)instance;
+	return accessor->getDexterite(id, level);
 }

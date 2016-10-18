@@ -15,7 +15,7 @@ int main()
 	string character_path = "F:\\Users\\Vince\\Documents\\Visual Studio 2015\\Projects\\One Piece Project\\Resources\\Characters";
 	Character_Database *database = new Character_Database();
 
-	database->importXml(character_path);
+	database->importXml(character_path, 1);
 
 	delete database;
 
